@@ -37,6 +37,10 @@
       font-size: 18px;
     }
 
+    #score {
+      margin-bottom: 20px;
+    }
+
     #restart-btn {
       display: none;
       margin-top: 20px;
@@ -51,7 +55,8 @@
       <button class="button" id="non-iphone-btn">Non-iPhone User</button>
     </div>
     <div id="result" class="result"></div>
-    <div id="score" class="result"></div>
+    <div id="score"></div>
+    <button class="button" id="next-btn">Next</button>
     <button class="button" id="restart-btn">Restart</button>
   </div>
 
@@ -62,6 +67,7 @@
     var nonIphoneBtn = document.getElementById("non-iphone-btn");
     var resultElem = document.getElementById("result");
     var scoreElem = document.getElementById("score");
+    var nextBtn = document.getElementById("next-btn");
     var restartBtn = document.getElementById("restart-btn");
 
     var currentIndex = 0;
@@ -107,11 +113,7 @@
         resultElem.innerHTML = "";
         currentIndex++;
       } else {
-        if (mode === "one-life") {
-          displayGameOver();
-        } else {
-          displayGameResult();
-        }
+        displayGameResult();
       }
     }
 
@@ -133,7 +135,9 @@
         }
       }
 
-      displayNextUser();
+      nextBtn.style.display = "inline-block";
+      iphoneBtn.disabled = true;
+      nonIphoneBtn.disabled = true;
     }
 
     // Function to display the game over message
@@ -156,6 +160,15 @@
       restartBtn.style.display = "block";
     }
 
+    // Function to go to the next user
+    function goToNextUser() {
+      nextBtn.style.display = "none";
+      iphoneBtn.disabled = false;
+      nonIphoneBtn.disabled = false;
+      resultElem.innerHTML = "";
+      displayNextUser();
+    }
+
     // Function to restart the game
     function restartGame() {
       currentIndex = 0;
@@ -173,6 +186,7 @@
     // Add event listeners to the buttons
     iphoneBtn.addEventListener("click", handleButtonClick);
     nonIphoneBtn.addEventListener("click", handleButtonClick);
+    nextBtn.addEventListener("click", goToNextUser);
     restartBtn.addEventListener("click", restartGame);
 
     // Start the game by loading user data
