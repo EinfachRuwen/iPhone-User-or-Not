@@ -1,33 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Twitter User Game</title>
+  <title>Twitter User Game - Home</title>
   <style>
-    /* CSS styles for the game */
+    /* CSS styles for the home page */
     body {
       font-family: monospace;
     }
 
-    #game-container {
+    #home-container {
       display: flex;
       flex-direction: column;
       align-items: center;
       margin-top: 50px;
     }
 
-    #profile-picture {
-      max-width: 100%;
-      max-height: 300px;
-      border: 2px solid #000;
-      margin-bottom: 20px;
+    .title {
+      font-size: 36px;
+      font-weight: bold;
+      font-family: monospace;
+      animation: titleAnimation 1s ease-in-out infinite alternate;
     }
 
-    #buttons-container {
+    @keyframes titleAnimation {
+      from {
+        transform: scale(1);
+      }
+      to {
+        transform: scale(1.1);
+      }
+    }
+
+    #group-container {
+      margin-top: 50px;
       display: flex;
       gap: 10px;
     }
 
-    .button {
+    .group-button {
       padding: 10px 20px;
       font-size: 16px;
       background-color: #000;
@@ -36,132 +46,67 @@
       cursor: pointer;
     }
 
-    .result {
+    #mode-container {
       margin-top: 20px;
-      font-size: 18px;
+      display: none;
     }
 
-    #restart-btn {
-      display: none;
-      margin-top: 20px;
+    .mode-button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #000;
+      color: #fff;
+      border: none;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <div id="game-container">
-    <img id="profile-picture" src="" alt="Profile Picture">
-    <div id="buttons-container">
-      <button class="button" id="iphone-btn">iPhone User</button>
-      <button class="button" id="non-iphone-btn">Non-iPhone User</button>
+  <div id="home-container">
+    <h1 class="title">Twitter User Game</h1>
+    <div id="group-container">
+      <button class="group-button" id="bahnbubble-btn">Bahnbubble</button>
+      <button class="group-button" id="post-btn">Deutsche Post</button>
     </div>
-    <div id="result" class="result"></div>
-    <div id="score" class="result"></div>
-    <button class="button" id="restart-btn">Restart</button>
+    <div id="mode-container">
+      <button class="mode-button" id="normal-mode-btn">Normal Mode</button>
+      <button class="mode-button" id="one-life-mode-btn">One Life Mode</button>
+    </div>
   </div>
 
   <script>
-    // JavaScript code for the game
-    var profilePictureElem = document.getElementById("profile-picture");
-    var iphoneBtn = document.getElementById("iphone-btn");
-    var nonIphoneBtn = document.getElementById("non-iphone-btn");
-    var resultElem = document.getElementById("result");
-    var scoreElem = document.getElementById("score");
-    var restartBtn = document.getElementById("restart-btn");
+    // JavaScript code for the home page
+    var bahnbubbleBtn = document.getElementById("bahnbubble-btn");
+    var postBtn = document.getElementById("post-btn");
+    var normalModeBtn = document.getElementById("normal-mode-btn");
+    var oneLifeModeBtn = document.getElementById("one-life-mode-btn");
 
-    var currentIndex = 0;
-    var score = 0;
-    var userList = [];
-    var shuffledUserList = [];
+    // Function to handle group selection
+    function selectGroup(group) {
+      bahnbubbleBtn.disabled = true;
+      postBtn.disabled = true;
+      normalModeBtn.disabled = false;
+      oneLifeModeBtn.disabled = false;
 
-    // Function to load the user data from JSON file
-    function loadUserList(callback) {
-      var xhr = new XMLHttpRequest();
-      xhr.overrideMimeType("application/json");
-      xhr.open("GET", "users.json", true);
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          userList = JSON.parse(xhr.responseText);
-          shuffleUserList();
-          callback();
-        }
-      };
-      xhr.send(null);
+      normalModeBtn.addEventListener("click", function () {
+        location.href = "game.html?group=" + group + "&mode=normal";
+      });
+
+      oneLifeModeBtn.addEventListener("click", function () {
+        location.href = "game.html?group=" + group + "&mode=one-life";
+      });
+
+      document.getElementById("mode-container").style.display = "block";
     }
 
-    // Function to shuffle the user list
-    function shuffleUserList() {
-      shuffledUserList = userList.slice(); // Create a copy of the original list
-      for (let i = shuffledUserList.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffledUserList[i], shuffledUserList[j]] = [shuffledUserList[j], shuffledUserList[i]];
-      }
-    }
+    // Add event listeners to group buttons
+    bahnbubbleBtn.addEventListener("click", function () {
+      selectGroup("bahnbubble");
+    });
 
-    // Function to load the next user profile
-    function loadNextUser() {
-      if (currentIndex < shuffledUserList.length) {
-        var currentUser = shuffledUserList[currentIndex];
-        profilePictureElem.src = currentUser.picture;
-        resultElem.innerHTML = "";
-        currentIndex++;
-      } else {
-        endGame();
-      }
-    }
-
-    // Function to adjust profile picture size
-    function adjustProfilePictureSize() {
-      var aspectRatio = profilePictureElem.naturalWidth / profilePictureElem.naturalHeight;
-      var containerWidth = parseFloat(window.getComputedStyle(profilePictureElem.parentElement).width);
-      var adjustedWidth, adjustedHeight;
-
-      adjustedWidth = containerWidth;
-      adjustedHeight = adjustedWidth / aspectRatio;
-
-      profilePictureElem.style.width = adjustedWidth + "px";
-      profilePictureElem.style.height = adjustedHeight + "px";
-    }
-
-    // Function to handle button clicks
-    function buttonClickHandler(event) {
-      var currentUser = shuffledUserList[currentIndex - 1];
-      var isCorrect = (event.target.id === "iphone-btn" && currentUser.isiPhoneUser) ||
-                      (event.target.id === "non-iphone-btn" && !currentUser.isiPhoneUser);
-
-      if (isCorrect) {
-        resultElem.innerHTML = "Correct!";
-        score++;
-      } else {
-        resultElem.innerHTML = "Wrong!";
-      }
-
-      loadNextUser();
-    }
-
-    // Function to end the game
-    function endGame() {
-      resultElem.innerHTML = "Game Over";
-      scoreElem.innerHTML = "Your score: " + score + " out of " + shuffledUserList.length;
-      restartBtn.style.display = "block";
-    }
-
-    // Function to restart the game
-    function restartGame() {
-      currentIndex = 0;
-      score = 0;
-      shuffleUserList();
-      loadNextUser();
-      scoreElem.innerHTML = "";
-      restartBtn.style.display = "none";
-    }
-
-    // Add event listeners to the buttons
-    iphoneBtn.addEventListener("click", buttonClickHandler);
-    nonIphoneBtn.addEventListener("click", buttonClickHandler);
-    restartBtn.addEventListener("click", restartGame);
-
-    // Start the game by loading user data
-    loadUserList(loadNextUser);
+    postBtn.addEventListener("click", function () {
+      selectGroup("post");
+    });
   </script>
 </body>
 </html>
