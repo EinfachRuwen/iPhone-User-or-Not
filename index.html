@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Twitter User Game - Home</title>
+  <title>Twitter User Game</title>
   <style>
     /* CSS styles for the home page */
     body {
@@ -15,98 +15,40 @@
       margin-top: 50px;
     }
 
-    .title {
-      font-size: 36px;
-      font-weight: bold;
-      font-family: monospace;
-      animation: titleAnimation 1s ease-in-out infinite alternate;
-    }
-
-    @keyframes titleAnimation {
-      from {
-        transform: scale(1);
-      }
-      to {
-        transform: scale(1.1);
-      }
-    }
-
-    #group-container {
-      margin-top: 50px;
-      display: flex;
-      gap: 10px;
-    }
-
-    .group-button {
+    .button {
       padding: 10px 20px;
       font-size: 16px;
       background-color: #000;
       color: #fff;
       border: none;
       cursor: pointer;
-    }
-
-    #mode-container {
-      margin-top: 20px;
-      display: none;
-    }
-
-    .mode-button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #000;
-      color: #fff;
-      border: none;
-      cursor: pointer;
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
   <div id="home-container">
-    <h1 class="title">Twitter User Game</h1>
-    <div id="group-container">
-      <button class="group-button" id="bahnbubble-btn">Bahnbubble</button>
-      <button class="group-button" id="post-btn">Deutsche Post</button>
-    </div>
-    <div id="mode-container">
-      <button class="mode-button" id="normal-mode-btn">Normal Mode</button>
-      <button class="mode-button" id="one-life-mode-btn">One Life Mode</button>
+    <h1 style="font-family: monospace; font-size: 48px; text-align: center; margin-bottom: 50px; animation: blink 1s infinite;">Twitter User Game</h1>
+    <h2 style="font-family: monospace; font-size: 24px; text-align: center; margin-bottom: 30px;">Choose a User Group:</h2>
+    <div>
+      <button class="button" onclick="selectGroup('post')">Post</button>
+      <button class="button" onclick="selectGroup('bahnbubble')">Bahnbubble</button>
     </div>
   </div>
 
   <script>
     // JavaScript code for the home page
-    var bahnbubbleBtn = document.getElementById("bahnbubble-btn");
-    var postBtn = document.getElementById("post-btn");
-    var normalModeBtn = document.getElementById("normal-mode-btn");
-    var oneLifeModeBtn = document.getElementById("one-life-mode-btn");
-
-    // Function to handle group selection
     function selectGroup(group) {
-      bahnbubbleBtn.disabled = true;
-      postBtn.disabled = true;
-      normalModeBtn.disabled = false;
-      oneLifeModeBtn.disabled = false;
+      var mode = prompt("Choose a game mode: Normal or One Life", "Normal");
+      mode = mode.toLowerCase();
 
-      normalModeBtn.addEventListener("click", function () {
-        location.href = "game.html?group=" + group + "&mode=normal";
-      });
-
-      oneLifeModeBtn.addEventListener("click", function () {
-        location.href = "game.html?group=" + group + "&mode=one-life";
-      });
-
-      document.getElementById("mode-container").style.display = "block";
+      if (mode === "normal" || mode === "one life") {
+        var url = "game.html?group=" + group + "&mode=" + mode.replace(" ", "-");
+        window.location.href = url;
+      } else {
+        alert("Invalid game mode! Please choose either Normal or One Life.");
+      }
     }
-
-    // Add event listeners to group buttons
-    bahnbubbleBtn.addEventListener("click", function () {
-      selectGroup("bahnbubble");
-    });
-
-    postBtn.addEventListener("click", function () {
-      selectGroup("post");
-    });
   </script>
 </body>
 </html>
