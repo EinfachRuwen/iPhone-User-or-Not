@@ -1,0 +1,2 @@
+- Bildgröße an Bild anpassen
+- Spannenderen Hintergrund machen

@@ -16,8 +16,8 @@
     }
 
     #profile-picture {
-      width: 200px;
-      height: 200px;
+      max-width: 100%;
+      max-height: 300px;
       border: 2px solid #000;
       margin-bottom: 20px;
     }
@@ -50,6 +50,8 @@
       <button class="button" id="non-iphone-btn">Non-iPhone User</button>
     </div>
     <div id="result" class="result"></div>
+    <div id="score" class="result"></div>
+    <button class="button" id="restart-btn">Restart</button>
   </div>
 
   <script>
@@ -58,9 +60,13 @@
     var iphoneBtn = document.getElementById("iphone-btn");
     var nonIphoneBtn = document.getElementById("non-iphone-btn");
     var resultElem = document.getElementById("result");
+    var scoreElem = document.getElementById("score");
+    var restartBtn = document.getElementById("restart-btn");
 
     var currentIndex = 0;
+    var score = 0;
     var userList = [];
+    var shuffledUserList = [];
 
     // Function to load the user data from JSON file
     function loadUserList(callback) {
@@ -70,32 +76,75 @@
       xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
           userList = JSON.parse(xhr.responseText);
+          shuffleUserList();
           callback();
         }
       };
       xhr.send(null);
     }
 
+    // Function to shuffle the user list
+    function shuffleUserList() {
+      shuffledUserList = userList.slice(); // Create a copy of the original list
+      for (let i = shuffledUserList.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledUserList[i], shuffledUserList[j]] = [shuffledUserList[j], shuffledUserList[i]];
+      }
+    }
+
     // Function to load the next user profile
     function loadNextUser() {
-      if (currentIndex < userList.length) {
-        var currentUser = userList[currentIndex];
+      if (currentIndex < shuffledUserList.length) {
+        var currentUser = shuffledUserList[currentIndex];
         profilePictureElem.src = currentUser.picture;
+        profilePictureElem.onload = function() {
+          adjustProfilePictureSize();
+        };
         resultElem.innerHTML = "";
         currentIndex++;
       } else {
-        resultElem.innerHTML = "Game Over";
+        endGame();
       }
+    }
+
+    // Function to adjust profile picture size
+    function adjustProfilePictureSize() {
+      var aspectRatio = profilePictureElem.naturalWidth / profilePictureElem.naturalHeight;
+      var maxHeight = parseFloat(window.getComputedStyle(profilePictureElem).maxHeight);
+      var maxWidth = parseFloat(window.getComputedStyle(profilePictureElem).maxWidth);
+      var containerWidth = parseFloat(window.getComputedStyle(profilePictureElem.parentElement).width);
+      var containerHeight = parseFloat(window.getComputedStyle(profilePictureElem.parentElement).height);
+      var adjustedWidth, adjustedHeight;
+
+      if (aspectRatio > 1) {
+        adjustedWidth = maxWidth;
+        adjustedHeight = maxWidth / aspectRatio;
+        if (adjustedHeight > maxHeight) {
+          adjustedHeight = maxHeight;
+          adjustedWidth = maxHeight * aspectRatio;
+        }
+      } else {
+        adjustedHeight = maxHeight;
+        adjustedWidth = maxHeight * aspectRatio;
+        if (adjustedWidth > maxWidth) {
+          adjustedWidth = maxWidth;
+          adjustedHeight = maxWidth / aspectRatio;
+        }
+      }
+
+      profilePictureElem.style.width = adjustedWidth + "px";
+      profilePictureElem.style.height = adjustedHeight + "px";
     }
 
     // Function to handle button clicks
     function buttonClickHandler(event) {
-      var currentUser = userList[currentIndex - 1];
+      var currentUser = shuffledUserList[currentIndex - 1];
       var isCorrect = (event.target.id === "iphone-btn" && currentUser.isiPhoneUser) ||
                       (event.target.id === "non-iphone-btn" && !currentUser.isiPhoneUser);
 
       if (isCorrect) {
         resultElem.innerHTML = "Correct!";
+        score++;
       } else {
         resultElem.innerHTML = "Wrong!";
       }
@@ -103,9 +152,27 @@
       loadNextUser();
     }
 
+    // Function to end the game
+    function endGame() {
+      resultElem.innerHTML = "Game Over";
+      scoreElem.innerHTML = "Your score: " + score + " out of " + shuffledUserList.length;
+      restartBtn.style.display = "block";
+    }
+
+    // Function to restart the game
+    function restartGame() {
+      currentIndex = 0;
+      score = 0;
+      shuffleUserList();
+      loadNextUser();
+      scoreElem.innerHTML = "";
+      restartBtn.style.display = "none";
+    }
+
     // Add event listeners to the buttons
     iphoneBtn.addEventListener("click", buttonClickHandler);
     nonIphoneBtn.addEventListener("click", buttonClickHandler);
+    restartBtn.addEventListener("click", restartGame);
 
     // Start the game by loading user data
     loadUserList(loadNextUser);
