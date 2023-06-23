@@ -40,6 +40,11 @@
       margin-top: 20px;
       font-size: 18px;
     }
+
+    #restart-btn {
+      display: none;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
@@ -97,9 +102,6 @@
       if (currentIndex < shuffledUserList.length) {
         var currentUser = shuffledUserList[currentIndex];
         profilePictureElem.src = currentUser.picture;
-        profilePictureElem.onload = function() {
-          adjustProfilePictureSize();
-        };
         resultElem.innerHTML = "";
         currentIndex++;
       } else {
@@ -110,27 +112,11 @@
     // Function to adjust profile picture size
     function adjustProfilePictureSize() {
       var aspectRatio = profilePictureElem.naturalWidth / profilePictureElem.naturalHeight;
-      var maxHeight = parseFloat(window.getComputedStyle(profilePictureElem).maxHeight);
-      var maxWidth = parseFloat(window.getComputedStyle(profilePictureElem).maxWidth);
       var containerWidth = parseFloat(window.getComputedStyle(profilePictureElem.parentElement).width);
-      var containerHeight = parseFloat(window.getComputedStyle(profilePictureElem.parentElement).height);
       var adjustedWidth, adjustedHeight;
 
-      if (aspectRatio > 1) {
-        adjustedWidth = maxWidth;
-        adjustedHeight = maxWidth / aspectRatio;
-        if (adjustedHeight > maxHeight) {
-          adjustedHeight = maxHeight;
-          adjustedWidth = maxHeight * aspectRatio;
-        }
-      } else {
-        adjustedHeight = maxHeight;
-        adjustedWidth = maxHeight * aspectRatio;
-        if (adjustedWidth > maxWidth) {
-          adjustedWidth = maxWidth;
-          adjustedHeight = maxWidth / aspectRatio;
-        }
-      }
+      adjustedWidth = containerWidth;
+      adjustedHeight = adjustedWidth / aspectRatio;
 
       profilePictureElem.style.width = adjustedWidth + "px";
       profilePictureElem.style.height = adjustedHeight + "px";
