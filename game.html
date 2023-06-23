@@ -45,6 +45,11 @@
       display: none;
       margin-top: 20px;
     }
+
+    #back-btn {
+      display: none;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
@@ -58,6 +63,7 @@
     <div id="score"></div>
     <button class="button" id="next-btn">Next</button>
     <button class="button" id="restart-btn">Restart</button>
+    <button class="button" id="back-btn">Back to Start Page</button>
   </div>
 
   <script>
@@ -69,6 +75,7 @@
     var scoreElem = document.getElementById("score");
     var nextBtn = document.getElementById("next-btn");
     var restartBtn = document.getElementById("restart-btn");
+    var backBtn = document.getElementById("back-btn");
 
     var currentIndex = 0;
     var score = 0;
@@ -148,6 +155,7 @@
       resultElem.innerHTML = "Game Over";
       scoreElem.innerHTML = "Your score: " + score + " out of " + shuffledUserList.length;
       restartBtn.style.display = "block";
+      backBtn.style.display = "block";
     }
 
     // Function to display the final game result
@@ -158,6 +166,7 @@
       resultElem.innerHTML = "Game Completed!";
       scoreElem.innerHTML = "Your score: " + score + " out of " + shuffledUserList.length;
       restartBtn.style.display = "block";
+      backBtn.style.display = "block";
     }
 
     // Function to go to the next user
@@ -180,7 +189,13 @@
       resultElem.innerHTML = "";
       scoreElem.innerHTML = "";
       restartBtn.style.display = "none";
+      backBtn.style.display = "none";
       loadUserList(displayNextUser);
+    }
+
+    // Function to go back to the start page
+    function goToStartPage() {
+      window.location.href = "index.html";
     }
 
     // Add event listeners to the buttons
@@ -188,6 +203,7 @@
     nonIphoneBtn.addEventListener("click", handleButtonClick);
     nextBtn.addEventListener("click", goToNextUser);
     restartBtn.addEventListener("click", restartGame);
+    backBtn.addEventListener("click", goToStartPage);
 
     // Start the game by loading user data
     loadUserList(displayNextUser);
