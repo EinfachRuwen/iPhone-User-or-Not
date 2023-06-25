@@ -1,4 +1,5 @@
 import json
+import sys
 
 
 def find_users_by_name(users, name):
@@ -7,6 +8,10 @@ def find_users_by_name(users, name):
         if user["name"] == name:
             matching_users.append(user)
     return matching_users
+
+
+def print_message(message):
+    print("\033[1m" + message + "\033[0m")
 
 
 json_file = input("Gib den Dateinamen der JSON-Datei ein: ")
@@ -22,7 +27,8 @@ while True:
     matching_users = find_users_by_name(data, name)
 
     if len(matching_users) > 1:
-        print("Es gibt mehrere Benutzer mit dem Namen '{}'.".format(name))
+        print()
+        print_message("Es gibt mehrere Benutzer mit dem Namen '{}'.".format(name))
         print("Folgende Benutzer wurden gefunden:")
 
         for user in matching_users:
@@ -37,7 +43,8 @@ while True:
 
     elif len(matching_users) == 1:
         existing_user = matching_users[0]
-        print("Ein Benutzer mit dem Namen '{}' existiert bereits:".format(name))
+        print()
+        print_message("Ein Benutzer mit dem Namen '{}' existiert bereits:".format(name))
         print("ID: {}".format(existing_user["id"]))
         print("Bild-URL: {}".format(existing_user["picture"]))
         print("Ist iPhone-Benutzer: {}".format(existing_user["isiPhoneUser"]))
@@ -68,4 +75,10 @@ while True:
         json.dump(data, file, indent=4)
 
     num_users = len(data)
+    print()
     print(f"Es sind {num_users} Benutzer in der Liste.")
+    print("-" * 50)  # Zeichnet eine Linie
+
+    # Neustart des Skripts
+    max_id = max(data, key=lambda x: x["id"])["id"]
+    continue
