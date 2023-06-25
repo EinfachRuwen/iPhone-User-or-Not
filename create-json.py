@@ -21,6 +21,12 @@ def print_message(message, is_bold=False):
 while True:
     json_file = input("Gib den Dateinamen der JSON-Datei ein: ")
 
+    if not json_file.endswith(".json"):
+        json_file += ".json"
+        print()
+        print_message("Es scheint so, als hättest du vergessen, '.json' anzugeben. Ich hab's einfach mal für dich ergänzt ^^", True)
+        print()
+
     try:
         with open(json_file, encoding='utf-8') as file:
             data = json.load(file)
@@ -100,6 +106,6 @@ while True:
 
     num_users = len(data)
     print()
-    print("Es sind {} Benutzer in der Liste.".format(num_users))
+    print_message("Es sind {} Benutzer in der Liste.".format(num_users))
     print("-" * 30)
     print()
