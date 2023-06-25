@@ -54,7 +54,10 @@
       margin-top: 20px;
     }
 
-
+    #tweet-btn {
+      display: none;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
@@ -69,6 +72,7 @@
     <button class="button" id="next-btn">Next</button>
     <button class="button" id="restart-btn">Restart</button>
     <button class="button" id="back-btn">Back to Start Page</button>
+    <button class="button" id="tweet-btn">Tweet Results</button>
   </div>
 
   <script>
@@ -81,6 +85,7 @@
     var nextBtn = document.getElementById("next-btn");
     var restartBtn = document.getElementById("restart-btn");
     var backBtn = document.getElementById("back-btn");
+    var tweetBtn = document.getElementById("tweet-btn");
 
     var currentIndex = 0;
     var score = 0;
@@ -161,6 +166,7 @@
       scoreElem.innerHTML = "Your score: " + score + " out of " + shuffledUserList.length;
       restartBtn.style.display = "block";
       backBtn.style.display = "block";
+      tweetBtn.style.display = "block";
     }
 
     // Function to display the final game result
@@ -172,6 +178,7 @@
       scoreElem.innerHTML = "Your score: " + score + " out of " + shuffledUserList.length;
       restartBtn.style.display = "block";
       backBtn.style.display = "block";
+      tweetBtn.style.display = "block";
     }
 
     // Function to go to the next user
@@ -195,6 +202,7 @@
       scoreElem.innerHTML = "";
       restartBtn.style.display = "none";
       backBtn.style.display = "none";
+      tweetBtn.style.display = "none";
       loadUserList(displayNextUser);
     }
 
@@ -203,12 +211,22 @@
       window.location.href = "index.html";
     }
 
+    // Function to tweet the game results
+    function tweetResults() {
+      var scoreText = "I scored " + score + " out of " + shuffledUserList.length;
+      var gameURL = "https://iphone-user-or-not.by0.link";
+      var tweetText = scoreText + " on the \"Is it an iPhone user or not\" game in the #" + group + " group. How much can you manage? Go to " + gameURL + " now to find out! #" + mode;
+      var tweetURL = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(tweetText);
+      window.open(tweetURL, "_blank");
+    }
+
     // Add event listeners to the buttons
     iphoneBtn.addEventListener("click", handleButtonClick);
     nonIphoneBtn.addEventListener("click", handleButtonClick);
     nextBtn.addEventListener("click", goToNextUser);
     restartBtn.addEventListener("click", restartGame);
     backBtn.addEventListener("click", goToStartPage);
+    tweetBtn.addEventListener("click", tweetResults);
 
     // Start the game by loading user data
     loadUserList(displayNextUser);
