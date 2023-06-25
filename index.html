@@ -127,6 +127,10 @@
       padding: 5px 10px;
     }
 
+    h2 {
+      color: #fff;
+    }
+
   </style>
 </head>
 <body>
@@ -154,6 +158,9 @@
       modeButtonsContainer.style.display = "flex";
       modeButtonsContainer.style.flexDirection = "column";
       modeButtonsContainer.style.alignItems = "center";
+
+      var subElement = document.getElementById("sub");
+      subElement.style.display = "none";
 
       var modeTitle = document.createElement("h2");
       modeTitle.innerText = "Choose a game mode:";
