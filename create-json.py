@@ -14,10 +14,18 @@ def print_message(message):
     print("\033[1m" + message + "\033[0m")
 
 
-json_file = input("Gib den Dateinamen der JSON-Datei ein: ")
+while True:
+    json_file = input("Gib den Dateinamen der JSON-Datei ein: ")
 
-with open(json_file, encoding='utf-8') as file:
-    data = json.load(file)
+    try:
+        with open(json_file, encoding='utf-8') as file:
+            data = json.load(file)
+        break
+    except FileNotFoundError:
+        print()
+        print_message("Eine Datei mit dem Namen '{}' existiert nicht. Bitte versuche es erneut.".format(json_file))
+        print()
+
 
 max_id = max(data, key=lambda x: x["id"])["id"] if data else 0
 
@@ -81,4 +89,3 @@ while True:
 
     # Neustart des Skripts
     max_id = max(data, key=lambda x: x["id"])["id"]
-    continue
