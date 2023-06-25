@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Is it a iPhone-User or not?</title>
+  <title>Is it an iPhone-User or not?</title>
   <style>
     /* CSS styles for the home page */
     body {
@@ -25,6 +25,10 @@
       font-weight: bold;
       margin-bottom: 20px;
       text-align: center;
+      color: #fff;
+    }
+
+    #sub {
       color: #fff;
     }
 
@@ -79,20 +83,49 @@
         opacity: 0;
       }
     }
+
+    /* CSS styles for About button */
+    #about-button {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      font-family: monospace;
+      font-size: 14px;
+      background-color: #000;
+      color: #fff;
+      border: 2px solid #fff;
+      cursor: pointer;
+      padding: 5px 10px;
+    }
+
+    #report-button {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      font-family: monospace;
+      font-size: 14px;
+      background-color: #000;
+      color: #fff;
+      border: 2px solid #fff;
+      cursor: pointer;
+      padding: 5px 10px;
+    }
+
   </style>
 </head>
 <body>
   <div id="home-container">
-    <h1 id="title">Is it a iPhone-User or not?</h1>
-    <h2>Choose a group:</h2>
+    <h1 id="title">Is it an iPhone-User or not?</h1>
+    <h2 id="sub">Choose a group:</h2>
     <div id="group-buttons-container">
-      <button class="button" onclick="selectGroup('post')">Post Group</button>
-      <button class="button" onclick="selectGroup('bahnbubble')">Bahnbubble Group</button>
+      <button class="button" onclick="selectGroup('bahnbubble')">Bahnbubble</button>
     </div>
   </div>
 
   <div id="matrix-background"></div>
 
+  <div id="about-button" onclick="openAboutWindow()">About</div>
+  <div id="report-button" onclick="openReportWindow()">Report a problem</div>
   <script>
     // JavaScript code for the home page
     function selectGroup(group) {
@@ -159,6 +192,31 @@
         }
       }
     }, 500);
+
+    // Function to open the About window
+    function openAboutWindow() {
+      var aboutText = "About the Game:\n\n" +
+                      "The game 'Is it an iPhone-User or not?' is a fun guessing game where you need to guess " +
+                      "whether a person in a given picture is an iPhone user or not. You will be presented with " +
+                      "a series of user profiles, and your task is to select the correct answer based on the " +
+                      "visual clues provided.\n\n" +
+                      "To play the game, choose a group and a game mode. In the normal mode, you will have " +
+                      "multiple chances to guess correctly, while in the one life mode, you only have one chance " +
+                      "to guess correctly. The game will keep track of your score and display it at the end.\n\n" +
+                      "Enjoy the game and have fun guessing!\n";
+
+      window.open("about.html", "_blank", "width=500,height=400,scrollbars=1,resizable=1");
+    }
+
+    // JavaScript code for the report button
+    function openReportWindow() {
+      var url = "report.html";
+      window.open(url, "_blank", "width=500,height=400,scrollbars=1,resizable=1");
+    }
+
+    // Add event listener to the report button
+    var reportButton = document.getElementById("report-button");
+    reportButton.addEventListener("click", openReportWindow);
   </script>
 </body>
 </html>

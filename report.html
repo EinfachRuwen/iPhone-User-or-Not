@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Report a problem</title>
+  <style>
+    body {
+      font-family: monospace;
+      background-color: #000;
+      color: #fff;
+      margin: 20px;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 24px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #fff;
+      border-radius: 4px;
+      background-color: #000;
+      color: #fff;
+    }
+
+    textarea {
+      height: 150px;
+      resize: vertical;
+    }
+
+    .button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #000;
+      color: #fff;
+      border: 1px solid #fff;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background-color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Report a problem</h1>
+  <form id="reportForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="email">Email:</label>
+    <input type="text" id="email" name="email" required>
+
+    <label for="category">Category:</label>
+    <select id="category" name="category" required>
+      <option value="abuse">Abuse</option>
+      <option value="misinformation">Misinformation</option>
+      <option value="own-category-or-language">Request to create your own category / language</option>
+        <option value="user-suggestion">Suggestion for a user (Please include Category)</option>
+      <option value="other">Other</option>
+    </select>
+
+    <label for="message">Message:</label>
+    <textarea id="message" name="message" required></textarea>
+
+    <input type="button" value="Send" class="button" onclick="sendReport()">
+  </form>
+
+  <script>
+    function sendReport() {
+      var name = document.getElementById("name").value;
+      var email = document.getElementById("email").value;
+      var category = document.getElementById("category").value;
+      var message = document.getElementById("message").value;
+
+      var subject = "iPhone-User or not - Report: " + category;
+
+      var body = "Information about the Problem:\n" +
+        "Name = " + name + "\n" +
+        "Email = " + email + "\n" +
+        "Message:\n" + message + "\n" +
+        "\nThis is an automatic email, please do not change anything, and just send it exactly as it is. Thank you for your understanding.";
+
+      var mailtoLink = "mailto:byzero@duck.com" +
+        "?subject=" + encodeURIComponent(subject) +
+        "&body=" + encodeURIComponent(body);
+
+      window.location.href = mailtoLink;
+    }
+  </script>
+</body>
+</html>
