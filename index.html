@@ -98,6 +98,21 @@
       padding: 5px 10px;
     }
 
+    #source-code-button {
+      /* add button right next to the About Button */
+      position: fixed;
+      bottom: 10px;
+      left: 100px;
+      font-family: monospace;
+      font-size: 14px;
+      background-color: #000;
+      color: #fff;
+      border: 2px solid #fff;
+      cursor: pointer;
+      padding: 5px 10px;
+      margin-left: -15px;
+    }
+
     #report-button {
       position: fixed;
       bottom: 10px;
@@ -125,6 +140,7 @@
   <div id="matrix-background"></div>
 
   <div id="about-button" onclick="openAboutWindow()">About</div>
+  <a href="https://github.com/EinfachRuwen/iPhone-User-or-Not"><div id="source-code-button">Source Code</div></a>
   <div id="report-button" onclick="openReportWindow()">Report a problem</div>
   <script>
     // JavaScript code for the home page
