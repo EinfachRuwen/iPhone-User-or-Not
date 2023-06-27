@@ -59,10 +59,20 @@
       display: none;
       margin-top: 20px;
     }
+
+    /* New styles for the indicator */
+    #indicator {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      color: #fff;
+      font-size: 16px;
+    }
   </style>
 </head>
 <body>
   <div id="game-container">
+    <div id="indicator"></div> <!-- Indicator element added -->
     <img id="profile-picture" src="" alt="Profile Picture">
     <div>
       <button class="button" id="iphone-btn">iPhone User</button>
@@ -79,6 +89,7 @@
   <script>
     // JavaScript code for the game page
     var profilePictureElem = document.getElementById("profile-picture");
+    var indicatorElem = document.getElementById("indicator"); // New indicator element
     var iphoneBtn = document.getElementById("iphone-btn");
     var nonIphoneBtn = document.getElementById("non-iphone-btn");
     var resultElem = document.getElementById("result");
@@ -130,6 +141,7 @@
         profilePictureElem.src = currentUser.picture;
         resultElem.innerHTML = "";
         currentIndex++;
+        updateIndicator(); // Update the indicator after changing the current index
       } else {
         displayGameResult();
       }
@@ -231,6 +243,12 @@
 
     // Start the game by loading user data
     loadUserList(displayNextUser);
+
+    // Function to update the indicator
+    function updateIndicator() {
+      var indicatorElem = document.getElementById("indicator");
+      indicatorElem.textContent = currentIndex + "/" + shuffledUserList.length;
+    }
   </script>
 </body>
 </html>
