@@ -36,10 +36,8 @@ while True:
         print_message("Eine Datei mit dem Namen '{}' existiert nicht. Bitte versuche es erneut.".format(json_file), True)
         print()
 
-
-max_id = max(data, key=lambda x: x["id"])["id"] if data else 0
-
 while True:
+    max_id = max(data, key=lambda x: x["id"])["id"] if data else 0
     name = input("Name: ")
 
     matching_users = find_users_by_name(data, name)
