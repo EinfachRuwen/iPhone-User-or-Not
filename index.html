@@ -131,6 +131,24 @@
       color: #fff;
     }
 
+    #privacy-button {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      font-family: monospace;
+      font-size: 14px;
+      background-color: #000;
+      color: #fff;
+      border: 2px solid #fff;
+      cursor: pointer;
+      padding: 5px 10px;
+      text-decoration: none;
+    }
+
+    #privacy-button:hover {
+      background-color: #333;
+    }
+
   </style>
 </head>
 <body>
@@ -147,6 +165,7 @@
   <div id="about-button" onclick="openAboutWindow()">About</div>
   <a href="https://github.com/EinfachRuwen/iPhone-User-or-Not"><div id="source-code-button">Source Code</div></a>
   <div id="report-button" onclick="openReportWindow()">Report a problem</div>
+  <a id="privacy-button" href="datenschutz.html">Datenschutz</a>
   <script>
     // JavaScript code for the home page
     function selectGroup(group) {

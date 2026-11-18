@@ -51,6 +51,17 @@
     .button:hover {
       background-color: #333;
     }
+
+    .privacy-note {
+      margin-top: 20px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #ccc;
+    }
+
+    .privacy-note a {
+      color: #fff;
+    }
   </style>
 </head>
 <body>
@@ -76,6 +87,10 @@
 
     <input type="button" value="Send" class="button" onclick="sendReport()">
   </form>
+  <p class="privacy-note">
+    Nothing is sent by this website: "Send" opens your own email program with a prepared message to byzero@duck.com.
+    More in the <a href="datenschutz.html" target="_blank">Datenschutzerkl&auml;rung (privacy policy)</a>.
+  </p>
 
   <script>
     function sendReport() {
