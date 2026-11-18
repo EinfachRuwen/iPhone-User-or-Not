@@ -24,6 +24,35 @@
       margin-bottom: 20px;
     }
 
+    /* Platzhalter für Einträge ohne Bild: zeigt den X-Handle statt eines kaputten Bildes */
+    #profile-placeholder {
+      display: none;
+      box-sizing: border-box;
+      width: 300px;
+      max-width: 90vw;
+      min-height: 200px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border: 2px solid #fff;
+      color: #fff;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    #profile-placeholder-handle {
+      font-size: 22px;
+      font-weight: bold;
+      overflow-wrap: anywhere;
+    }
+
+    #profile-placeholder-note {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #aaa;
+    }
+
     .button {
       padding: 10px 20px;
       font-size: 16px;
@@ -92,7 +121,11 @@
   <div id="game-container">
     <div id="indicator"></div> <!-- Indicator element added -->
     <a id="privacy-button" href="datenschutz.html">Datenschutz</a>
-    <img id="profile-picture" src="" alt="Profile Picture">
+    <img id="profile-picture" alt="Profile Picture" style="display: none;">
+    <div id="profile-placeholder">
+      <div id="profile-placeholder-handle"></div>
+      <div id="profile-placeholder-note">(no picture)</div>
+    </div>
     <div>
       <button class="button" id="iphone-btn">iPhone User</button>
       <button class="button" id="non-iphone-btn">Non-iPhone User</button>
@@ -108,6 +141,8 @@
   <script>
     // JavaScript code for the game page
     var profilePictureElem = document.getElementById("profile-picture");
+    var profilePlaceholderElem = document.getElementById("profile-placeholder");
+    var profilePlaceholderHandleElem = document.getElementById("profile-placeholder-handle");
     var indicatorElem = document.getElementById("indicator"); // New indicator element
     var iphoneBtn = document.getElementById("iphone-btn");
     var nonIphoneBtn = document.getElementById("non-iphone-btn");
@@ -157,7 +192,7 @@
     function displayNextUser() {
       if (currentIndex < shuffledUserList.length) {
         var currentUser = shuffledUserList[currentIndex];
-        profilePictureElem.src = currentUser.picture;
+        showProfile(currentUser);
         resultElem.innerHTML = "";
         currentIndex++;
         updateIndicator(); // Update the indicator after changing the current index
@@ -165,6 +200,37 @@
         displayGameResult();
       }
     }
+
+    // Shows the user's picture (local file) or, if there is none, a placeholder with the handle
+    function showProfile(user) {
+      profilePlaceholderHandleElem.textContent = "@" + user.name;
+      if (user.picture) {
+        profilePlaceholderElem.style.display = "none";
+        profilePictureElem.alt = "Profile of @" + user.name;
+        profilePictureElem.src = user.picture;
+        profilePictureElem.style.display = "block";
+      } else {
+        showPlaceholder();
+      }
+    }
+
+    function showPlaceholder() {
+      profilePictureElem.style.display = "none";
+      profilePictureElem.removeAttribute("src");
+      profilePlaceholderElem.style.display = "flex";
+    }
+
+    function hideProfile() {
+      profilePictureElem.style.display = "none";
+      profilePlaceholderElem.style.display = "none";
+    }
+
+    // If a picture cannot be loaded, fall back to the placeholder instead of a broken image
+    profilePictureElem.addEventListener("error", function () {
+      if (profilePictureElem.getAttribute("src")) {
+        showPlaceholder();
+      }
+    });
 
     // Function to handle button clicks
     function handleButtonClick(event) {
@@ -191,7 +257,7 @@
 
     // Function to display the game over message
     function displayGameOver() {
-      profilePictureElem.style.display = "none";
+      hideProfile();
       iphoneBtn.style.display = "none";
       nonIphoneBtn.style.display = "none";
       resultElem.innerHTML = "Game Over";
@@ -203,7 +269,7 @@
 
     // Function to display the final game result
     function displayGameResult() {
-      profilePictureElem.style.display = "none";
+      hideProfile();
       iphoneBtn.style.display = "none";
       nonIphoneBtn.style.display = "none";
       resultElem.innerHTML = "Game Completed!";
@@ -227,7 +293,6 @@
       currentIndex = 0;
       score = 0;
       shuffledUserList = [];
-      profilePictureElem.style.display = "block";
       iphoneBtn.style.display = "inline-block";
       nonIphoneBtn.style.display = "inline-block";
       resultElem.innerHTML = "";

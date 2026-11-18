@@ -83,8 +83,12 @@ while True:
             if proceed != "y":
                 continue
 
-    picture = input("Bild-URL: ")
-    picture = picture.replace("https://ruwen.is-from.space/", "https://ruwen.is-from.space/r/")
+    # Bilder liegen lokal im Repo (Ordner img/), damit keine externen Bildhoster angefragt werden.
+    # Leer lassen = kein Bild (das Spiel zeigt dann den Handle als Platzhalter).
+    picture = input("Bild-Pfad im Repo (z. B. img/name.png, leer = kein Bild): ").strip()
+    if picture.startswith("http://") or picture.startswith("https://"):
+        print_message("Externe Bild-URLs werden nicht mehr verwendet. Lege das Bild unter img/ ab und gib den Pfad an.", True)
+        continue
     is_iphone_user_input = input("Ist iPhone-Benutzer? (y/n): ").lower()
     is_iphone_user = is_iphone_user_input in ["y", "yes"]
 

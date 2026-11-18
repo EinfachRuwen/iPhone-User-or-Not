@@ -167,33 +167,20 @@
       sind. Eine Reichweitenmessung oder Statistik findet nicht statt.
     </p>
 
-    <h2>5. Bilder im Spiel von externen Bildhostern</h2>
+    <h2>5. Bilder im Spiel</h2>
     <p>
-      Die Profilbilder im Spiel werden nicht von GitHub, sondern direkt von externen Bildhostern geladen.
-      Sobald ein Bild angezeigt werden soll, baut dein Browser eine Verbindung zu diesem Anbieter auf.
-      Dabei erhält der Anbieter deine IP-Adresse, Datum und Uhrzeit, die Adresse des Bildes, den Referrer
-      sowie Browser- und Geräteangaben. Rechtsgrundlage ist mein berechtigtes Interesse, die Spielbilder
-      anzuzeigen (Art. 6 Abs. 1 lit. f DSGVO).
+      Alle Bilder im Spiel liegen auf demselben Server wie die Seite selbst und werden wie die übrigen
+      Dateien über GitHub Pages ausgeliefert (siehe Abschnitt 3). Externe Bildhoster werden nicht
+      eingebunden; dein Browser stellt beim Spielen keine Verbindung zu anderen Anbietern her.
+      Für Einträge ohne Bild zeigt das Spiel nur den Benutzernamen an.
     </p>
-    <ul>
-      <li>
-        <strong>Imgur</strong> (i.imgur.com): betrieben von Imgur, Inc. bzw. MediaLab.AI, Inc., USA.
-        Imgur ist nicht unter dem EU-US Data Privacy Framework zertifiziert. Imgur erfasst laut eigener
-        Datenschutzerklärung unter anderem IP-Adresse, Browser, Betriebssystem und Bildaufrufe.
-      </li>
-      <li>
-        <strong>ruwen.is-from.space</strong>: eine Domain des Dateihosters nest.rip. Die Verbindung läuft
-        über das Netzwerk von Cloudflare, Inc., 101 Townsend St, San Francisco, CA 94107, USA, das dabei
-        technische Verbindungsdaten verarbeitet. Cloudflare ist unter dem EU-US Data Privacy Framework
-        zertifiziert.
-      </li>
-    </ul>
 
     <h2>6. Personen, die im Spiel gezeigt werden</h2>
     <p>
       Die Gruppe „Bahnbubble“ zeigt Bildschirmfotos öffentlich zugänglicher Profile auf X (früher Twitter).
-      Gespeichert sind dafür in der Datei <code>bahnbubble.json</code> der Benutzername, die Adresse des
-      Bildschirmfotos und die Angabe, ob die Person ein iPhone nutzt. Diese Angabe wird nach jeder Antwort
+      Gespeichert sind dafür in der Datei <code>bahnbubble.json</code> der Benutzername und die Angabe,
+      ob die Person ein iPhone nutzt; für einen Teil der Personen außerdem ein Bildschirmfoto des Profils,
+      das als Datei zusammen mit der Seite gespeichert ist (Ordner <code>img/</code>). Diese Angabe wird nach jeder Antwort
       im Spiel aufgelöst. Die Angaben stammen aus den öffentlichen Profilen und Beiträgen auf X.
       Zweck ist allein das Ratespiel; Rechtsgrundlage ist mein berechtigtes Interesse an diesem
       Unterhaltungsangebot (Art. 6 Abs. 1 lit. f DSGVO). Die Angaben bleiben so lange im Spiel, wie es
@@ -241,16 +228,16 @@
 
     <h2>10. Drittlandübermittlung</h2>
     <p>
-      GitHub, Cloudflare, Imgur und DuckDuckGo sitzen in den USA. Für GitHub und Cloudflare erfolgt die
-      Übermittlung auf Grundlage des EU-US Data Privacy Framework (Art. 45 DSGVO). Imgur ist nicht nach
-      dem Data Privacy Framework zertifiziert; die Bilder lädt dein Browser direkt von dort. Für X ist im
-      EU-Raum die Gesellschaft in Irland zuständig.
+      GitHub und DuckDuckGo sitzen in den USA. Für GitHub erfolgt die Übermittlung auf Grundlage des
+      EU-US Data Privacy Framework (Art. 45 DSGVO). DuckDuckGo erhält nur dann Daten, wenn du selbst eine
+      E-Mail über „Report a problem“ abschickst (siehe Abschnitt 7). Für X ist im EU-Raum die
+      Gesellschaft in Irland zuständig.
     </p>
 
     <h2>11. Speicherdauer</h2>
     <p>
-      Ich selbst speichere über Besucher dieser Seite nichts. Server-Logs speichern GitHub und die
-      Bildhoster nach ihren eigenen Regeln (siehe oben). E-Mails über „Report a problem“ lösche ich, wenn
+      Ich selbst speichere über Besucher dieser Seite nichts. Server-Logs speichert GitHub nach eigenen
+      Regeln (siehe Abschnitt 3). E-Mails über „Report a problem“ lösche ich, wenn
       die Anfrage erledigt ist. Angaben zu Personen im Spiel bleiben bis zum Widerspruch oder bis das
       Spiel offline geht.
     </p>
